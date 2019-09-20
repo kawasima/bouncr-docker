@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>net.unit8.bouncr</groupId>
+    <artifactId>bouncr-postgres-redis-email-parent</artifactId>
+    <version>0.2.8</version>
+    <packaging>pom</packaging>
+
+    <name>bouncr-postgres-redis-email-parent</name>
+
+    <modules>
+        <module>api</module>
+        <module>proxy</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.release>11</maven.compiler.release>
+        <bouncr.version>0.2.8</bouncr.version>
+        <enkan.version>0.10.0</enkan.version>
+        <postgres.version>42.2.5</postgres.version>
+        <log4j2.version>2.11.1</log4j2.version>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>ossrh-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases><enabled>false</enabled></releases>
+            <snapshots><enabled>true</enabled></snapshots>
+        </repository>
+    </repositories>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>1.5.1</version>
+                    <executions>
+                        <execution>
+                            <id>docker-build</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>dockerBuild</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>net.unit8.bouncr</groupId>
+                <artifactId>bouncr-api-server</artifactId>
+                <version>${bouncr.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.unit8.bouncr</groupId>
+                <artifactId>bouncr-proxy</artifactId>
+                <version>${bouncr.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.unit8.bouncr</groupId>
+                <artifactId>bouncr-hook-email</artifactId>
+                <version>${bouncr.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.unit8.bouncr</groupId>
+                <artifactId>bouncr-hook-license</artifactId>
+                <version>${bouncr.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.unit8.enkan</groupId>
+                <artifactId>enkan-component-thymeleaf</artifactId>
+                <version>${enkan.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.unit8.enkan</groupId>
+                <artifactId>enkan-component-jedis</artifactId>
+                <version>0.1.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>net.unit8.enkan</groupId>
+                        <artifactId>enkan-web</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>${postgres.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-slf4j-impl</artifactId>
+                <version>${log4j2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>1.4.199</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

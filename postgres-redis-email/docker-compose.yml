@@ -1,0 +1,70 @@
+version: '3'
+services:
+  kvs:
+    image: redis:5-alpine
+    ports:
+      - "6379:6379"
+  db:
+    image: postgres:11
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: bouncr
+      POSTGRES_USER: bouncr
+    ports:
+      - "5432:5432"
+
+  proxy:
+    image: bouncr/bouncr-proxy:postgres-redis-email-0.2.8
+    depends_on:
+      - db
+      - kvs
+      - api
+    environment:
+      PORT: "3000"
+      JDBC_URL: jdbc:postgresql://db:5432/bouncr
+      ENABLE_CONNECTION_CACHE: "false"
+      JDBC_USER: bouncr
+      JDBC_PASSWORD: bouncr
+      REDIS_HOST: kvs
+      REDIS_PORT: 6379
+      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5006
+    ports:
+      - "3000:3000"
+      - "5006:5006"
+
+  api:
+    image: bouncr/bouncr-api:postgres-redis-email-0.2.8
+    depends_on:
+      - db
+      - kvs
+    environment:
+      PORT: "3005"
+      JDBC_URL: jdbc:postgresql://db:5432/bouncr
+      JDBC_USER: bouncr
+      JDBC_PASSWORD: bouncr
+      REDIS_HOST: kvs
+      REDIS_PORT: 6379
+      MAIL_HOST: smtp.mailtrap.io
+      MAIL_PORT: 2525
+      MAIL_USER: ${MAIL_USER}
+      MAIL_PASSWORD: ${MAIL_PASSWORD}
+      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+      ENKAN_ENV: development
+#      ENKAN_REPL: jshell
+      REPL_PORT: 62753
+      REPL_HOST: 0.0.0.0
+      COMPLETER_PORT: 62754
+      CORS_ORIGINS: http://localhost:8000
+    ports:
+      - "3005:3005"
+      - "5005:5005"
+      - "62753:62753"
+      - "62754:62754"
+
+  rotom:
+    image: rotom/rotom
+    environment:
+      PORT: "3007"
+      BASE_PATH: "/rotom"
+    ports:
+      - "3007:3007"

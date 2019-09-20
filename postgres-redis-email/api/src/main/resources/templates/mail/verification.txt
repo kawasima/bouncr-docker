@@ -1,0 +1,2 @@
+Verify your email address.
+[# th:utext="'http://localhost:8000/index.html?code=' + ${code} + '#/email_verification'" /]

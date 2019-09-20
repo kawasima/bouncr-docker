@@ -1,0 +1,2 @@
+GET http://localhost:3000/rotom/create/Home
+GET http://localhost:3000/bouncr/api/users
