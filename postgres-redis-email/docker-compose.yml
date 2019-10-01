@@ -14,7 +14,7 @@ services:
       - "5432:5432"
 
   proxy:
-    image: bouncr/bouncr-proxy:postgres-redis-email-0.2.8
+    image: bouncr/bouncr-proxy:postgres-redis-email-0.2.9-SNAPSHOT
     depends_on:
       - db
       - kvs
@@ -33,7 +33,7 @@ services:
       - "5006:5006"
 
   api:
-    image: bouncr/bouncr-api:postgres-redis-email-0.2.8
+    image: bouncr/bouncr-api:postgres-redis-email-0.2.9-SNAPSHOT
     depends_on:
       - db
       - kvs

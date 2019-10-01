@@ -24,6 +24,7 @@ import net.unit8.bouncr.hook.license.LicenseUpdateHook;
 import net.unit8.bouncr.hook.license.entity.LicenseLastActivity;
 import net.unit8.bouncr.hook.license.entity.UserLicense;
 
+import java.net.URI;
 import java.util.Objects;
 
 import static enkan.component.ComponentRelationship.component;
@@ -46,6 +47,9 @@ public class SystemCustomizer {
         config.getKeyValueStoreSettings().setOidcSessionStoreFactory(deps ->
                 provider.createStore("oidc-session", 300));
         system.relationships(component("config").using("jedis"));
+
+        config.getOidcConfiguration().setSignUpRedirectUrl(URI.create("http://localhost:8000/#/sign_up"));
+        config.getOidcConfiguration().setSignInRedirectUrl(URI.create("http://localhost:8000/#/sign_in_by_oidc"));
 
         config.getHookRepo().register(HookPoint.BEFORE_VALIDATE_USER_PROFILES, new NormalizeMailAddressHook());
         MailServerConfig mailServerConfig = builder(new MailServerConfig())

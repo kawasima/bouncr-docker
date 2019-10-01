@@ -6,7 +6,7 @@
 
     <groupId>net.unit8.bouncr</groupId>
     <artifactId>bouncr-postgres-redis-email-parent</artifactId>
-    <version>0.2.8</version>
+    <version>0.2.9-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>bouncr-postgres-redis-email-parent</name>
@@ -20,7 +20,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.release>11</maven.compiler.release>
-        <bouncr.version>0.2.8</bouncr.version>
+        <bouncr.version>0.2.9-SNAPSHOT</bouncr.version>
         <enkan.version>0.10.0</enkan.version>
         <postgres.version>42.2.5</postgres.version>
         <log4j2.version>2.11.1</log4j2.version>
