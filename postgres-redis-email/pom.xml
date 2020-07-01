@@ -23,7 +23,7 @@
         <bouncr.version>0.2.9-SNAPSHOT</bouncr.version>
         <enkan.version>0.10.0</enkan.version>
         <postgres.version>42.2.5</postgres.version>
-        <log4j2.version>2.11.1</log4j2.version>
+        <log4j2.version>2.13.3</log4j2.version>
     </properties>
 
     <repositories>
